@@ -5,11 +5,11 @@ import {} from '@types/googlemaps';
 
 declare var google: any;
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'place-search-component',
+  templateUrl: './place-search-component.html',
+  styles: ['agm-map {width: 100%;height: 600px;}']
 })
-export class AppComponent implements OnInit {
+export class PlaceSearchComponent implements OnInit {
 
   public latitude: number;
   public longitude: number;
@@ -38,7 +38,8 @@ export class AppComponent implements OnInit {
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['address']
+        types: ['address'],
+        componentRestrictions: {country: 'in'},
       });
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {

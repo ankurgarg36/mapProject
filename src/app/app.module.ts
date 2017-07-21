@@ -3,11 +3,13 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
-import {AppComponent} from './app.component';
 import {AgmCoreModule} from '@agm/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from './dashboard.component';
 import {HomeComponent} from 'app/home.component';
+import {PlaceSearchComponent} from './place-search.component';
+import {DirectionSearchComponent} from './direction-search.component';
+import {DirectionsMapDirective} from './google-map.directive';
 
 const routes: Routes = [
   {
@@ -16,8 +18,12 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'app',
-    component: AppComponent
+    path: 'place-search',
+    component: PlaceSearchComponent
+  },
+  {
+    path: 'direction-search',
+    component: DirectionSearchComponent
   },
   {
     path: 'home',
@@ -30,9 +36,11 @@ const routes: Routes = [
 ];
 @NgModule({
   declarations: [
+    DirectionsMapDirective,
     DashboardComponent,
-    AppComponent,
-    HomeComponent
+    PlaceSearchComponent,
+    HomeComponent,
+    DirectionSearchComponent
   ],
   imports: [
     BrowserModule,
