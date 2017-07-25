@@ -10,6 +10,8 @@ import {HomeComponent} from 'app/home.component';
 import {PlaceSearchComponent} from './place-search.component';
 import {DirectionSearchComponent} from './direction-search.component';
 import {DirectionsMapDirective} from './google-map.directive';
+import {HotelSearchComponent} from './hotel-search.component';
+import {HotelMapDirective} from './google-map-hotel.directive';
 
 const routes: Routes = [
   {
@@ -26,6 +28,10 @@ const routes: Routes = [
     component: DirectionSearchComponent
   },
   {
+    path: 'hotel-search',
+    component: HotelSearchComponent
+  },
+  {
     path: 'home',
     component: HomeComponent
   },
@@ -40,7 +46,9 @@ const routes: Routes = [
     DashboardComponent,
     PlaceSearchComponent,
     HomeComponent,
-    DirectionSearchComponent
+    HotelMapDirective,
+    DirectionSearchComponent,
+    HotelSearchComponent,
   ],
   imports: [
     BrowserModule,
