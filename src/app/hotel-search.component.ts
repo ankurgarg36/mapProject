@@ -87,8 +87,10 @@ export class HotelSearchComponent implements OnInit {
   }
 
   MarkerClickHandler(hotel: Hotel) {
-    this.hotel = hotel;
-    console.log(this.hotel);
+    this.ngZone.run(() => {
+      this.hotel = hotel;
+      console.log(this.hotel);
+    });
   }
 }
 
