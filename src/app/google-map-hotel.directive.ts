@@ -8,6 +8,9 @@ import 'rxjs/Rx';
 
 declare const google: any;
 
+export const MapConst = {
+    MARKER_PATH: 'https://developers.google.com/maps/documentation/javascript/images/marker_green'
+};
 
 @Directive({
     selector: 'google-map-hotel'
@@ -48,7 +51,7 @@ export class HotelMapDirective {
 
                     for (let i = 0; i < results.length; i++) {
                         const markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
-                        const markerIcon = me.MARKER_PATH + markerLetter + '.png';
+                        const markerIcon = MapConst.MARKER_PATH + markerLetter + '.png';
 
                         // Use marker animation to drop the icons incrementally on the map.
                         me.markers[i] = new google.maps.Marker({

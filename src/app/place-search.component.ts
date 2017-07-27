@@ -26,8 +26,8 @@ export class PlaceSearchComponent implements OnInit {
   ngOnInit() {
     //  set google maps defaults
     this.zoom = 4;
-    this.latitude = 39.8282;
-    this.longitude = -98.5795;
+    this.latitude = 28.6471944;
+    this.longitude = 76.9528362;
 
     // create search FormControl
     this.searchControl = new FormControl();
@@ -38,7 +38,7 @@ export class PlaceSearchComponent implements OnInit {
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['address'],
+        types: [],  // address,establishment,geocode
         componentRestrictions: {country: 'in'},
       });
       autocomplete.addListener('place_changed', () => {

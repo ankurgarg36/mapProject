@@ -1,7 +1,7 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {GoogleMapsAPIWrapper, LatLngLiteral, MapsAPILoader} from '@agm/core';
-import {Hotel, HotelMapDirective} from './google-map-hotel.directive';
+import {Hotel, HotelMapDirective, MapConst} from './google-map-hotel.directive';
 
 declare var google: any;
 @Component({
@@ -36,8 +36,8 @@ export class HotelSearchComponent implements OnInit {
   ngOnInit() {
     //  set google maps defaults
     this.zoom = 4;
-    this.latitude = 39.8282;
-    this.longitude = -98.5795;
+    this.latitude = 28.6471944;
+    this.longitude = 76.9528362;
 
     // create search FormControl
     this.searchControl = new FormControl();
@@ -48,7 +48,7 @@ export class HotelSearchComponent implements OnInit {
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-        types: ['address'],
+        types: [],  // address,establishment,geocode
         componentRestrictions: {country: 'in'},
       });
       autocomplete.addListener('place_changed', () => {
@@ -98,7 +98,7 @@ export class HotelSearchComponent implements OnInit {
 
   iconPath(index: any): string {
     const markerLetter = String.fromCharCode('A'.charCodeAt(0) + (index % 26));
-    return 'https://developers.google.com/maps/documentation/javascript/images/marker_green' + markerLetter + '.png';
+    return MapConst.MARKER_PATH + markerLetter + '.png';
   }
 
   triggerClick(obj): void {
