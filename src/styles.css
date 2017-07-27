@@ -17,10 +17,10 @@ table {
 }
 #listing {
 	position: absolute;
-	width: 200px;
-	height: 470px;
+	/*width: 200px;*/
+	height: 600px;
 	overflow: auto;
-	left: 442px;
+	/*left: 442px;*/
 	top: 0px;
 	cursor: pointer;
 	overflow-x: hidden;
@@ -83,4 +83,10 @@ table {
 }
 .iw_table_icon {
 	text-align: right;
+}
+.omega{
+	background-color: #F0F0F0;
+}
+.alpha{
+	background-color: #FFFFFF;
 }

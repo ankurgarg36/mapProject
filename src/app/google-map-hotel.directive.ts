@@ -18,9 +18,10 @@ export class HotelMapDirective {
     public markers: any;
     public MARKER_PATH: string;
     public infoWindow: any;
-    public infoContent: any;
+    public infoWindowContent: any;
 
     @Output() MarkerClick = new EventEmitter();
+    @Output() HotelResult = new EventEmitter();
 
     constructor(private gmapsApi: GoogleMapsAPIWrapper) {
         this.MARKER_PATH = 'https://developers.google.com/maps/documentation/javascript/images/marker_green';
@@ -32,7 +33,7 @@ export class HotelMapDirective {
             const latLng = new google.maps.LatLng({lat: this.lat, lng: this.lang});
             const me = this;
             this.infoWindow = new google.maps.InfoWindow({
-                content: me.infoContent
+                content: me.infoWindowContent
             });
             map.panTo(latLng);
             map.setZoom(15);
@@ -43,8 +44,8 @@ export class HotelMapDirective {
             };
             places.nearbySearch(search, function (results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    me.clearMarkers(me);
-                    // me.clearResult();
+                    me.clearMarkers();
+
                     for (let i = 0; i < results.length; i++) {
                         const markerLetter = String.fromCharCode('A'.charCodeAt(0) + (i % 26));
                         const markerIcon = me.MARKER_PATH + markerLetter + '.png';
@@ -86,12 +87,14 @@ export class HotelMapDirective {
                             me.markers[i].setMap(map);
                         });
                     }
+                    // set the hotel result as output for listing
+                    me.HotelResult.emit(me.markers);
                 }
             });
         });
     }
 
-    private getRatingHtml(place) {
+    private getRatingHtml(place): string {
         // Assign a five-star rating to the hotel, using a black star ('&#10029;')
         // to indicate the rating the hotel has earned, and a white star ('&#10025;')
         // for the rating points not achieved.
@@ -110,13 +113,13 @@ export class HotelMapDirective {
         return ratingHtml;
     }
 
-    clearMarkers(obj: any) {
-        for (let i = 0; i < obj.markers.length; i++) {
-            if (obj.markers[i]) {
-                obj.markers[i].setMap(null);
+    private clearMarkers() {
+        for (let i = 0; i < this.markers.length; i++) {
+            if (this.markers[i]) {
+                this.markers[i].setMap(null);
             }
         }
-        obj.markers = [];
+        this.markers = [];
     }
 }
 

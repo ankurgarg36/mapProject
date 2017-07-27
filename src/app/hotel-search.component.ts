@@ -7,7 +7,7 @@ declare var google: any;
 @Component({
   selector: 'hotel-search-component',
   templateUrl: './hotel-search-component.html',
-  styles: ['agm-map {width: 100%;height: 600px;}'],
+  styles: ['agm-map {height: 600px;}'],
   providers: [GoogleMapsAPIWrapper]
 })
 export class HotelSearchComponent implements OnInit {
@@ -22,10 +22,11 @@ export class HotelSearchComponent implements OnInit {
   @ViewChild('search')
   public searchElementRef: ElementRef;
 
-  @ViewChild('infocontent')
-  public infocontentElementRef: ElementRef;
+  @ViewChild('infowindowcontent')
+  public infowindowcontentElementRef: ElementRef;
 
   public hotel: Hotel;
+  public hotels: any;
 
   constructor(private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
@@ -61,16 +62,12 @@ export class HotelSearchComponent implements OnInit {
           }
           this.vc.lat = place.geometry.location.lat();
           this.vc.lang = place.geometry.location.lng();
-          this.vc.infoContent = this.infocontentElementRef.nativeElement;
+          this.vc.infoWindowContent = this.infowindowcontentElementRef.nativeElement;
 
           this.mapsAPILoader.load().then(() => {
             this.vc.updateDirections();
           });
 
-          // set latitude, longitude and zoom
-          /*this.latitude = place.geometry.location.lat();
-           this.longitude = place.geometry.location.lng();
-           this.zoom = 12;*/
         });
       });
     });
@@ -91,6 +88,21 @@ export class HotelSearchComponent implements OnInit {
       this.hotel = hotel;
       console.log(this.hotel);
     });
+  }
+
+  HotelResultHandler(hotels: any) {
+    this.ngZone.run(() => {
+      this.hotels = hotels;
+    });
+  }
+
+  iconPath(index: any): string {
+    const markerLetter = String.fromCharCode('A'.charCodeAt(0) + (index % 26));
+    return 'https://developers.google.com/maps/documentation/javascript/images/marker_green' + markerLetter + '.png';
+  }
+
+  triggerClick(obj): void {
+    google.maps.event.trigger(obj, 'click');
   }
 }
 
