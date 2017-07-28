@@ -17,7 +17,7 @@
 				<table id="resultsTable" class="table table-striped">
 					<tbody id="results">
 					<tr *ngFor="let hotel of hotels;let rowIndex = index;" (click)="triggerClick(hotel)">
-						<td><img src="{{iconPath(rowIndex)}}"></td>
+						<td><img src="{{getIcon(rowIndex)}}"></td>
 						<td>{{hotel.placeResult.name}}</td>
 					</tr>
 					</tbody>

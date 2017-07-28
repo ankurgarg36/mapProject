@@ -1,7 +1,7 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {GoogleMapsAPIWrapper, MapsAPILoader} from '@agm/core';
-import {DirectionsMapDirective} from './google-map.directive';
+import {DirectionsMapDirective} from '../../directives/google-map.directive';
 
 declare var google: any;
 

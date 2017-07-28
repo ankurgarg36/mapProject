@@ -1,13 +1,13 @@
 import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {GoogleMapsAPIWrapper, LatLngLiteral, MapsAPILoader} from '@agm/core';
-import {Hotel, HotelMapDirective, MapConst} from './google-map-hotel.directive';
+import {Hotel, HotelMapDirective, MapConst} from '../../directives/google-map-hotel.directive';
 
 declare var google: any;
 @Component({
   selector: 'hotel-search-component',
   templateUrl: './hotel-search-component.html',
-  styles: ['agm-map {height: 600px;}'],
+  styleUrls: ['./hotel-search-component.css'],
   providers: [GoogleMapsAPIWrapper]
 })
 export class HotelSearchComponent implements OnInit {
@@ -96,12 +96,12 @@ export class HotelSearchComponent implements OnInit {
     });
   }
 
-  iconPath(index: any): string {
+  getIcon = (index: any): string => {
     const markerLetter = String.fromCharCode('A'.charCodeAt(0) + (index % 26));
     return MapConst.MARKER_PATH + markerLetter + '.png';
   }
 
-  triggerClick(obj): void {
+  triggerClick = (obj: any): void => {
     google.maps.event.trigger(obj, 'click');
   }
 }

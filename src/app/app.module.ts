@@ -5,13 +5,14 @@ import {HttpModule} from '@angular/http';
 
 import {AgmCoreModule} from '@agm/core';
 import {RouterModule, Routes} from '@angular/router';
-import {DashboardComponent} from './dashboard.component';
-import {HomeComponent} from 'app/home.component';
-import {PlaceSearchComponent} from './place-search.component';
-import {DirectionSearchComponent} from './direction-search.component';
-import {DirectionsMapDirective} from './google-map.directive';
-import {HotelSearchComponent} from './hotel-search.component';
-import {HotelMapDirective} from './google-map-hotel.directive';
+import {PlaceSearchComponent} from './components/place-search/place-search.component';
+import {DirectionSearchComponent} from './components/direction-search/direction-search.component';
+import {HotelSearchComponent} from './components/hotel-search/hotel-search.component';
+import {HomeComponent} from './components/home/home.component';
+import {DirectionsMapDirective} from './directives/google-map.directive';
+import {HotelMapDirective} from './directives/google-map-hotel.directive';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+
 
 const routes: Routes = [
   {
