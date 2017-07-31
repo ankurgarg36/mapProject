@@ -27,6 +27,7 @@ export class HotelSearchComponent implements OnInit {
 
   public hotel: Hotel;
   public hotels: any;
+  public currentPlaceId: string;
 
   constructor(private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
@@ -47,6 +48,7 @@ export class HotelSearchComponent implements OnInit {
 
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
+      this.setCurrentPlaceId();
       const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: [],  // address,establishment,geocode
         componentRestrictions: {country: 'in'},
@@ -103,6 +105,23 @@ export class HotelSearchComponent implements OnInit {
 
   triggerClick = (obj: any): void => {
     google.maps.event.trigger(obj, 'click');
+  }
+
+  setCurrentPlaceId = () => {
+    const geocoder = new google.maps.Geocoder;
+    const latlng = {lat: this.latitude, lng: this.longitude};
+    geocoder.geocode({'location': latlng}, (results, status) => {
+      this.ngZone.run(() => {
+        const me = this;
+        if (status === google.maps.GeocoderStatus.OK) {
+          if (results[1]) {
+            // console.log(this.longitude); // working
+            me.currentPlaceId = results[1].place_id; // not working
+          }
+        }
+      });
+    });
+    console.log(this.currentPlaceId);
   }
 }
 
