@@ -79,7 +79,10 @@ export class HotelMapDirective {
                                         phone: place.formatted_phone_number,
                                         website: place.url,
                                         icon: place.icon,
-                                        rating: me.getRatingHtml(place)
+                                        rating: me.getRatingHtml(place),
+                                        placeId: marker.placeResult.place_id,
+                                        latitude: place.geometry.location.lat(),
+                                        longitude: place.geometry.location.lng()
                                     };
                                     me.MarkerClick.emit(hotelInfo);
                                 });
@@ -97,7 +100,7 @@ export class HotelMapDirective {
         });
     }
 
-    private getRatingHtml(place): string {
+    private getRatingHtml = (place): string => {
         // Assign a five-star rating to the hotel, using a black star ('&#10029;')
         // to indicate the rating the hotel has earned, and a white star ('&#10025;')
         // for the rating points not achieved.
@@ -133,4 +136,7 @@ export interface Hotel {
     phone: string;
     website: string;
     rating: string;
+    placeId: string;
+    latitude: number;
+    longitude: number;
 }

@@ -18,7 +18,7 @@ table {
 }
 #listing {
 	position: absolute;
-	/*width: 200px;*/
+	width: 94%;
 	height: 600px;
 	overflow: auto;
 	/*left: 442px;*/
@@ -69,7 +69,7 @@ table {
 }
 #resultsTable {
 	border-collapse: collapse;
-	width: 240px;
+	width: 100%;
 }
 #rating {
 	font-size: 13px;

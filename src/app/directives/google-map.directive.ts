@@ -42,6 +42,8 @@ export class DirectionsMapDirective {
                     strokeColor: '#00468c'
                 }
             });
+            console.log(this.origin.latitude + ':' + this.origin.longitude + ':' + this.originPlaceId);
+            console.log(this.destination.latitude + ':' + this.destination.longitude + ':' + this.destinationPlaceId);
             this.directionsDisplay.setDirections({routes: []});
             directionsService.route({
                 origin: {placeId: this.originPlaceId},
@@ -53,7 +55,7 @@ export class DirectionsMapDirective {
                 if (status === 'OK') {
                     me.directionsDisplay.setDirections(response);
                     map.setZoom(30);
-                    console.log(me.getcomputeDistance (latLngA, latLngB));
+                    console.log(me.getcomputeDistance(latLngA, latLngB));
                     const point = response.routes[0].legs[0];
                     me.estimatedTime = point.duration.text;
                     me.estimatedDistance = point.distance.text;
@@ -68,7 +70,7 @@ export class DirectionsMapDirective {
 
     }
 
-    private getcomputeDistance(latLngA: any, latLngB: any) {
+    private getcomputeDistance = (latLngA: any, latLngB: any) => {
         return (google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB) / 1000).toFixed(2);
     }
 }

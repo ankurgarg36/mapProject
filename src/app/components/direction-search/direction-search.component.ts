@@ -3,13 +3,13 @@ import {FormControl} from '@angular/forms';
 import {GoogleMapsAPIWrapper, MapsAPILoader} from '@agm/core';
 import {DirectionsMapDirective} from '../../directives/google-map.directive';
 
-declare var google: any;
+declare const google: any;
 
 @Component({
   selector: 'direction-search-component',
   templateUrl: './direction-search-component.html',
   styles: ['agm-map {width: 100%;height: 600px;}'],
-  providers : [ GoogleMapsAPIWrapper ]
+  providers: [GoogleMapsAPIWrapper]
 })
 export class DirectionSearchComponent implements OnInit {
 
@@ -31,14 +31,12 @@ export class DirectionSearchComponent implements OnInit {
   @ViewChild('scrollMe')
   private scrollContainer: ElementRef;
 
-   @ViewChild(DirectionsMapDirective) vc: DirectionsMapDirective;
+  @ViewChild(DirectionsMapDirective) vc: DirectionsMapDirective;
 
   public origin: any; //  its a example aleatory position
   public destination: any; //  its a example aleatory position
   constructor(private mapsAPILoader: MapsAPILoader,
-              private ngZone: NgZone,
-              private gmapsApi: GoogleMapsAPIWrapper,
-              private _elementRef: ElementRef) {
+              private ngZone: NgZone) {
   }
 
   ngOnInit() {
@@ -129,9 +127,5 @@ export class DirectionSearchComponent implements OnInit {
         this.zoom = 12;
       });
     }
-  }
-
-  private getMapCusotmStyles() {
-    //  Write your Google Map Custom Style Code Here.
   }
 }

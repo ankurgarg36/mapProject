@@ -5,14 +5,15 @@
 </div>
 <div class="form-group">
 	<div class="row">
-		<div class="col-xs-6 col-md-9">
+		<div class="col-xs-12 col-sm-12 col-md-9">
 			<agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
 				<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
 				<google-map-hotel [lat]="latitude" [lang]="longitude" (MarkerClick)="MarkerClickHandler($event)"
 				                  (HotelResult)="HotelResultHandler($event)"></google-map-hotel>
+				<sebm-google-map-directions [origin]="origin" [destination]="destination"></sebm-google-map-directions>
 			</agm-map>
 		</div>
-		<div class="col-xs-3 col-md-3">
+		<div class="col-xs-12 col-sm-12 col-md-3">
 			<div id="listing">
 				<table id="resultsTable" class="table table-striped">
 					<tbody id="results">
@@ -29,7 +30,7 @@
 
 	<div style="display: none">
 		<div id="info-content" #infowindowcontent>
-			<table>
+			<table class="table table-striped">
 				<tr id="iw-url-row" class="iw_table_row">
 					<td id="iw-icon" class="iw_table_icon"><img src="{{hotel?.icon}}"></td>
 					<td id="iw-url"><a href="{{hotel?.website}}">{{hotel?.name}}</a></td>
@@ -49,6 +50,11 @@
 				<tr id="iw-website-row" class="iw_table_row">
 					<td class="iw_attribute_name">Website:</td>
 					<td id="iw-website">{{hotel?.website}}</td>
+				</tr>
+				<tr id="iw-direction-row" class="iw_table_row">
+					<td class="iw_attribute_name" colspan="2">
+						<button (click)="getDirection(hotel)" class="btn btn-primary btn-block">Get Direction</button>
+					</td>
 				</tr>
 			</table>
 		</div>
