@@ -1,7 +1,7 @@
 /**
  * Created by ankur on 21/7/17.
  */
-import {Directive, Input} from '@angular/core';
+import {Directive, EventEmitter, Input, Output} from '@angular/core';
 import {GoogleMapsAPIWrapper} from '@agm/core';
 
 
@@ -20,6 +20,8 @@ export class DirectionsMapDirective {
     @Input() directionsDisplay: any;
     @Input() estimatedTime: any;
     @Input() estimatedDistance: any;
+
+    @Output() DirectionResult = new EventEmitter();
 
     constructor(private gmapsApi: GoogleMapsAPIWrapper) {
     }
@@ -55,12 +57,13 @@ export class DirectionsMapDirective {
                 if (status === 'OK') {
                     me.directionsDisplay.setDirections(response);
                     map.setZoom(30);
-                    console.log(me.getcomputeDistance(latLngA, latLngB));
+                    // console.log(me.getcomputeDistance(latLngA, latLngB));
                     const point = response.routes[0].legs[0];
                     me.estimatedTime = point.duration.text;
                     me.estimatedDistance = point.distance.text;
-                    console.log(me.estimatedTime);
-                    console.log('Estimated travel time: ' + point.duration.text + ' (' + point.distance.text + ')');
+                    me.DirectionResult.emit({estimatedTime: me.estimatedTime, estimatedDistance: me.estimatedDistance});
+                    // console.log(me.estimatedTime);
+                    // console.log('Estimated travel time: ' + point.duration.text + ' (' + point.distance.text + ')');
 
                 } else {
                     console.log('Directions request failed due to ' + status);

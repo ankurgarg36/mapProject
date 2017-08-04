@@ -85,3 +85,12 @@ table {
 .iw_table_icon {
 	text-align: right;
 }
+.custom-row {
+	margin-right: 15px!important;
+	margin-left: 0px!important;
+}
+.space-row a {
+		display: block;
+		font-size: 16px;
+		padding-top: 25px;
+}

@@ -34,6 +34,10 @@ export class HotelSearchComponent implements OnInit {
     public origin: any; //  its a example aleatory position
     public destination: any; //  its a example aleatory position
 
+    public estimatedTime: any;
+    public estimatedDistance: any;
+    public mapClass = 'col-md-12';
+
     constructor(private mapsAPILoader: MapsAPILoader,
                 private ngZone: NgZone) {
     }
@@ -58,6 +62,8 @@ export class HotelSearchComponent implements OnInit {
                 componentRestrictions: {country: 'in'},
             });
             autocomplete.addListener('place_changed', () => {
+                this.estimatedTime = null;
+                this.estimatedDistance = null;
                 this.ngZone.run(() => {
                     // get the place result
                     const place: google.maps.places.PlaceResult = autocomplete.getPlace();
@@ -78,6 +84,9 @@ export class HotelSearchComponent implements OnInit {
         });
     }
 
+    /**
+     * getting the lat, long from your current position
+     */
     private setCurrentPosition() {
         if ('geolocation' in navigator) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -90,28 +99,51 @@ export class HotelSearchComponent implements OnInit {
         }
     }
 
+    /**
+     * getting the information of particular hotel to for display in pop up
+     * @param hotel
+     * @constructor
+     */
     MarkerClickHandler(hotel: Hotel) {
         this.ngZone.run(() => {
             this.hotel = hotel;
-            console.log(this.hotel);
         });
     }
 
+    /**
+     * get all the hotels after the search. It is used for listing
+     * @param hotels
+     * @constructor
+     */
     HotelResultHandler(hotels: any) {
+        this.mapClass = 'col-md-9'
         this.ngZone.run(() => {
             this.hotels = hotels;
         });
     }
 
+    /**
+     * getting the url of hotel icon. it is different for every hotel
+     * @param index
+     * @returns {string}
+     */
     getIcon = (index: any): string => {
         const markerLetter = String.fromCharCode('A'.charCodeAt(0) + (index % 26));
         return MapConst.MARKER_PATH + markerLetter + '.png';
     }
 
+    /**
+     * firing the click event when user click on any hotel displyed in the list
+     * @param obj
+     */
     triggerClick = (obj: any): void => {
         google.maps.event.trigger(obj, 'click');
+        window.scrollTo(0, 0);
     }
 
+    /**
+     * setting the place id from your current location. this will be used as a origin
+     */
     setCurrentPlaceId = () => {
         const geocoder = new google.maps.Geocoder;
         const latlng = {lat: this.latitude, lng: this.longitude};
@@ -124,6 +156,11 @@ export class HotelSearchComponent implements OnInit {
             }
         });
     }
+
+    /**
+     * getting the direction between the hotel and your current position
+     * @param hotel it's a destination
+     */
     getDirection = (hotel: Hotel): void => {
         this.mapsAPILoader.load().then(() => {
             this.ngZone.run(() => {
@@ -145,6 +182,16 @@ export class HotelSearchComponent implements OnInit {
                 this.zoom = 12;
             });
         });
+    }
+
+    /**
+     * updating the distance and time for a particular hotel
+     * @param result
+     */
+    DirectionResultHandler = (result: any): void => {
+        this.estimatedDistance = result.estimatedDistance;
+        this.estimatedTime = result.estimatedTime;
+        this.vc.infoWindow.close();
     }
 }
 
